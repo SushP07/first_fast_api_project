@@ -1,5 +1,7 @@
 # First Fast API Project
 
+Note - my .gitignore has fastapi mentioned at it was the enviornment name.
+
 This repository is a small example FastAPI backend with a React frontend for managing products (simple inventory UI).
 
 Overview
