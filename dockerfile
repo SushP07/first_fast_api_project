@@ -1,6 +1,17 @@
 # Comment
 # Instrunctions Command
+#
+# Frontend Dockerfile for React application
+# Stage 1: build frontend
+FROM node:18 AS frontend-build
+WORKDIR /app/frontend
+COPY frontend/package*.json ./ 
+RUN npm ci
+COPY frontend/ .
+RUN npm run build
 
+# Backend Server Dockerfile for FastAPI application
+#
 # Using the official Python image from the Docker Hub similar to python version 3.14.2
 FROM python:3.14.2-slim
 
@@ -9,6 +20,9 @@ WORKDIR /app
 
 # Copy the current directory contents into the container at /app
 COPY . /app
+
+# Copy the built frontend from the frontend-build stage
+COPY --from=frontend-build /app/frontend/build /app/static
 
 # Install PostgreSQL client and libpq-dev for PostgreSQL support
 RUN apt-get update && apt-get install -y build-essential postgresql-client libpq-dev && rm -rf /var/lib/apt/lists/*
