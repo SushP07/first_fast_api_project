@@ -25,6 +25,14 @@ LABEL version="1.0"
 LABEL description="A FastAPI application for Sushi's Delight restaurant."
 
 
+# Expose the port the app will listen on
+EXPOSE 5000
+
+# Default DB host/port (can be overridden at runtime with -e)
+ENV DB_HOST=host.docker.internal
+ENV DB_PORT=5432
+
 # Run the command to start the FastAPI application using Uvicorn when the container launches
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Bind to 0.0.0.0 so the container accepts external connections and use port 5000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
 
